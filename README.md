@@ -42,6 +42,8 @@ npm run claim <name>     # Claim a package directly
 
 If you encounter rate limiting (429 errors), just take a short break before continuing.
 
+Package name squatting is against npm's Terms of Service. Use this tool responsibly.
+
 ## License
 
 [MIT](LICENSE)
