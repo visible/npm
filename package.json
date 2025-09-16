@@ -1,0 +1,32 @@
+{
+  "name": "npm-package-checker",
+  "version": "1.0.0",
+  "description": "Check NPM package name availability and evaluate coolness scores",
+  "main": "check.js",
+  "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "start": "node src/check.js",
+    "claim": "node src/claim.js"
+  },
+  "keywords": [
+    "npm",
+    "package",
+    "availability",
+    "checker",
+    "registry",
+    "coolness"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/npm-package-checker.git"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "speakeasy": "^2.0.0"
+  }
+}
