@@ -2,6 +2,17 @@
 
 Minimal NPM package availability checker.
 
+## ⚠️ Warning
+
+**This tool must be used in compliance with npm's Terms of Service:**
+
+- **Package name squatting is prohibited** - Do not claim names just to reserve them
+- **Automation of npm services is restricted** - Do not modify this tool for mass claiming
+- **Name trading is forbidden** - Do not claim names to sell or trade them
+- **Use responsibly** - Only claim packages you intend to actively develop
+
+If you encounter rate limiting (429 errors), take a break before continuing.
+
 ## Setup
 
 ### Environment Configuration (for claiming packages)
@@ -65,12 +76,6 @@ bun run claim <name>     # Claim a package directly
   - `display.js` - Terminal UI
   - `spinner.js` - Loading animation
 - `template/` - Template for claiming packages
-
-## Note
-
-If you encounter rate limiting (429 errors), just take a short break before continuing.
-
-Package name squatting is against npm's Terms of Service. Use this tool responsibly.
 
 ## License
 
