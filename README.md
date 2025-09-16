@@ -18,6 +18,9 @@ Minimal NPM package availability checker.
 
 ## Usage
 
+<details>
+<summary><b>npm</b></summary>
+
 ```bash
 npm start                # Show available packages only
 npm start -- -all        # Show all packages with status
@@ -25,6 +28,31 @@ npm start -- -ban        # Show banned/invalid packages
 npm run claim            # Claim a package (interactive)
 npm run claim <name>     # Claim a package directly
 ```
+</details>
+
+<details>
+<summary><b>pnpm</b></summary>
+
+```bash
+pnpm start               # Show available packages only
+pnpm start -all          # Show all packages with status
+pnpm start -ban          # Show banned/invalid packages
+pnpm claim               # Claim a package (interactive)
+pnpm claim <name>        # Claim a package directly
+```
+</details>
+
+<details>
+<summary><b>bun</b></summary>
+
+```bash
+bun run start            # Show available packages only
+bun run start -all       # Show all packages with status
+bun run start -ban       # Show banned/invalid packages
+bun run claim            # Claim a package (interactive)
+bun run claim <name>     # Claim a package directly
+```
+</details>
 
 ## Files
 
