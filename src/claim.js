@@ -212,7 +212,7 @@ async function claimPackage(packageName) {
         console.log('');
         console.log('Setting up automatic OTP:');
         console.log('');
-        console.log('1. Go to: https://www.npmjs.com/settings/profile');
+        console.log('1. Go to your NPM account settings');
         console.log('2. Find "Two-Factor Authentication" section');
         console.log('3. Copy the base32 secret key (not the QR code)');
         console.log('');
