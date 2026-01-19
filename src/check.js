@@ -3,12 +3,20 @@
 import { readFile, writeFile } from 'fs/promises';
 import { createReadStream } from 'fs';
 import { createInterface } from 'readline';
+import { Pool } from 'undici';
 import { isValidNpmPackageName } from './validate.js';
 import { Spinner } from './spinner.js';
 import { Display } from './display.js';
 
 const NPM_REGISTRY_URL = 'https://registry.npmjs.org';
-const CONCURRENT_LIMIT = 10;
+const CONCURRENT_LIMIT = 150;
+const REQUEST_TIMEOUT = 5000;
+
+const pool = new Pool(NPM_REGISTRY_URL, {
+  connections: CONCURRENT_LIMIT,
+  pipelining: 10,
+  keepAliveTimeout: 30000
+});
 const INPUT_FILE = 'data/word.txt';
 const OUTPUT_FILE = 'data/available.txt';
 
@@ -41,29 +49,22 @@ async function checkPackageAvailability(packageName) {
     };
   }
 
-  const url = `${NPM_REGISTRY_URL}/${packageName}`;
-
   try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 15000);
-
-    const response = await fetch(url, {
-      signal: controller.signal,
-      headers: {
-        'User-Agent': 'npm-package-checker/1.0.0'
-      }
+    const { statusCode } = await pool.request({
+      path: `/${packageName}`,
+      method: 'HEAD',
+      headersTimeout: REQUEST_TIMEOUT,
+      bodyTimeout: REQUEST_TIMEOUT
     });
 
-    clearTimeout(timeoutId);
-
-    if (response.status === 404) {
+    if (statusCode === 404) {
       return {
         name: packageName,
         status: 'AVAILABLE'
       };
     }
 
-    if (response.status === 200) {
+    if (statusCode === 200) {
       return {
         name: packageName,
         status: 'TAKEN'
@@ -72,13 +73,10 @@ async function checkPackageAvailability(packageName) {
 
     return {
       name: packageName,
-      status: `UNKNOWN (status: ${response.status})`
+      status: `UNKNOWN (status: ${statusCode})`
     };
   } catch (error) {
-    if (error.name === 'AbortError') {
-      throw new Error('Request timeout');
-    }
-    throw error;
+    throw new Error(error.message || 'Request failed');
   }
 }
 
@@ -141,6 +139,8 @@ async function saveAvailable(results) {
 }
 
 async function main() {
+  const startTime = Date.now();
+
   try {
     const packages = await readPackageList(INPUT_FILE);
     const display = new Display();
@@ -156,6 +156,9 @@ async function main() {
     }
 
     display.finish();
+
+    const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+    console.log(`Completed in ${elapsed}s`);
   } catch (error) {
     console.error(`\n✗ Error: ${error.message}`);
     process.exit(1);
