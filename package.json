@@ -9,7 +9,8 @@
   },
   "scripts": {
     "start": "node src/check.js",
-    "claim": "node src/claim.js"
+    "claim": "node src/claim.js",
+    "diagnose": "node src/diagnose.js"
   },
   "keywords": [
     "npm",
